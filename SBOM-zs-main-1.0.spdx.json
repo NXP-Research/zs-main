@@ -1,0 +1,35 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2026-10-21T15:43:47Z",
+    "creators": [
+      "Organization: NXP"
+    ],
+    "licenseListVersion": "3.28"
+  },
+  "name": "nxp-zephyr-workshop-1.0",
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://nxp.com/spdx/5b3764a2-7792-436b-8912-28fd91e3a210",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-package-5b3764a2-7792-436b-8912-28fd91e3a210",
+      "name": "nxp-zephyr-workshop",
+      "versionInfo": "1.0",
+      "licenseConcluded": "(Apache-2.0)",
+      "licenseDeclared": "(Apache-2.0)",
+      "downloadLocation": "NOASSERTION",
+      "originator": "Organization: nxp-zephyr-workshop",
+      "supplier": "NOASSERTION",
+      "externalRefs": [],
+      "filesAnalyzed": false
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-package-5b3764a2-7792-436b-8912-28fd91e3a210"
+    }
+  ]
+}

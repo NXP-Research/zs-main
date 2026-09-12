@@ -1,0 +1,44 @@
+name: Build and deploy documentation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install python packages
+        run: pip3 install sphinx sphinx-rtd-theme sphinx-tabs
+
+      - name: Build documentation
+        run: sphinx-build -W -b html doc/ doc/_build/html
+
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './doc/_build/html'
+
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to GitHub pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

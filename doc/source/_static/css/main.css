@@ -1,0 +1,24 @@
+/* upper side of the navigation bar (where logo/name sits) */
+.wy-side-nav-search {
+	background: #262626;
+}
+
+/* bottom side of the navigation bar (where ToC sits) */
+.wy-nav-side {
+	background-color: #262626;
+}
+
+/* ToC text found in navigation bar */
+.wy-menu-vertical p.caption {
+	color: #0EAFE0;
+}
+
+/* hides away the "Next" and "Previous" buttons - not really useful */
+.btn-neutral {
+	display: none;
+}
+
+/* set width manually - if not, will be rendered to 0px */
+.wy-side-nav-search a img.logo {
+	width: 175px;
+}

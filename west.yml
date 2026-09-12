@@ -1,0 +1,15 @@
+manifest:
+  version: "0.13"
+
+  remotes:
+    - name: nxp-zephyr-workshop
+      url-base: https://github.com/NXP-Research
+
+  projects:
+    - name: zs-zephyr
+      remote: nxp-zephyr-workshop
+      revision: dccb09599635bdff17633fa7e9dab014b91dce90
+      import:
+        name-allowlist:
+          - hal_nxp
+          - cmsis_6
