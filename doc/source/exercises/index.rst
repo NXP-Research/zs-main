@@ -174,7 +174,18 @@ for example with ``code build/zephyr/.config`` in VS Code:
 Useful documentation
 --------------------
 
-- `Zephyr documentation <https://docs.zephyrproject.org/latest/>`__
-- `FRDM-MCXA156 board page <https://docs.zephyrproject.org/latest/boards/nxp/frdm_mcxa156/doc/index.html>`__
-- `GPIO API <https://docs.zephyrproject.org/latest/hardware/peripherals/gpio.html>`__
-- `Kernel services <https://docs.zephyrproject.org/latest/kernel/services/index.html>`__
+The workshop uses Zephyr |zephyr_version|. All links below, and the
+*Zephyr reference* boxes on the exercise pages, point to the documentation
+of exactly this version. The ``latest`` documentation on the web may already
+describe newer features that this version does not have.
+
+- :zdoc:`Zephyr documentation <index>`
+- :zdoc:`FRDM-MCXA156 board page <boards/nxp/frdm_mcxa156/doc/index>`
+- :zdoc:`Kernel services <kernel/services/index>`
+- :zdoc:`Hardware support and peripherals <hardware/index>`
+- :zdoc:`GPIO <hardware/peripherals/gpio>`
+- :zdoc:`Devicetree <build/dts/index>` and :zdoc:`Kconfig <build/kconfig/index>`
+- :zdoc:`West, the Zephyr meta-tool <develop/west/index>`
+- :zapi:`API reference (Doxygen): Kernel APIs <kernel__apis>`
+- :zpage:`All Kconfig options <kconfig.html>`
+- :zdoc:`Zephyr glossary <glossary>`

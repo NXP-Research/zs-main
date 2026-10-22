@@ -4,7 +4,8 @@ Glossary
 ========
 
 The words you meet in the workshop, in alphabetical order. The exercise
-number shows where the word appears first.
+number shows where the word appears first. For more terms, see the official
+:zdoc:`Zephyr glossary <glossary>`.
 
 .. glossary::
    :sorted:

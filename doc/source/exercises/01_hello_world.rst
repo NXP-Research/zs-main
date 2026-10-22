@@ -64,6 +64,13 @@ What to look for:
 - ``main()`` prints ``CONFIG_BOARD_TARGET``. This is a text string with the
   name of the board you build for. It comes from Kconfig.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Application development <develop/application/index>`
+   - :zdoc:`Hello World sample <samples/hello_world/README>`
+   - :zkconfig:`CONFIG_BOARD_TARGET`
+
 Build it
 --------
 
@@ -116,6 +123,13 @@ the board's default configuration sets an ADC option, but the ADC driver is not
 enabled in this application. Options have **dependencies**, and an option
 whose dependencies are not met cannot be enabled.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Building, flashing and debugging with west <develop/west/build-flash-debug>`
+   - :zdoc:`FRDM-MCXA156 board <boards/nxp/frdm_mcxa156/doc/index>`
+   - :zdoc:`Setting Kconfig options <build/kconfig/setting>`
+
 Flash it and look at the console
 --------------------------------
 
@@ -138,6 +152,11 @@ output of ``main()``:
    Hello World! frdm_mcxa156/mcxa156
 
 If you see nothing, press the **RESET** button on the board.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Flash and debug host tools (LinkServer) <develop/flash_debug/host-tools>`
 
 Your task: print your own message
 ---------------------------------
@@ -207,6 +226,13 @@ the configuration, answer **No**.
    west build -t rom_report
 
 It prints a tree of all the code in your program and its size.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Interactive Kconfig interfaces (menuconfig) <build/kconfig/menuconfig>`
+   - :zdoc:`Optimization tools (rom_report) <develop/optimizations/tools>`
+   - :zkconfig:`CONFIG_PRINTK`, :zkconfig:`CONFIG_SERIAL`
 
 Discussion
 ----------

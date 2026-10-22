@@ -70,6 +70,11 @@ which is not allowed in an ISR. The usual pattern is:
   waiting;
 - a **thread** waits for these events and does the actual work.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Interrupts: offloading ISR work <kernel/services/interrupts>`
+
 Threads
 -------
 
@@ -113,6 +118,15 @@ does not, for two reasons:
   queue, and the queue stays empty until ``main()`` enables the button
   interrupt. ``heartbeat`` configures its own LED before it uses it.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Threads <kernel/services/threads/index>`
+   - :zdoc:`Scheduling <kernel/services/scheduling/index>`
+   - :zdoc:`System threads (main thread) <kernel/services/threads/system_threads>`
+   - :zapi:`Thread APIs <thread__apis>` (``K_THREAD_DEFINE``, ``k_msleep()``)
+   - :zkconfig:`CONFIG_MAIN_THREAD_PRIORITY`
+
 Message queues
 --------------
 
@@ -152,6 +166,13 @@ The last argument is the **timeout**. It decides whether the call blocks:
    * - ``K_FOREVER``
      - Wait as long as it takes
      - no
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Message queues <kernel/services/data_passing/message_queues>`
+   - :zapi:`Message Queue APIs <msgq__apis>` (``K_MSGQ_DEFINE``, ``k_msgq_put()``, ``k_msgq_get()``)
+   - :zapi:`System Clock APIs <clock__apis>` (``K_NO_WAIT``, ``K_MSEC()``, ``K_FOREVER``)
 
 Your tasks
 ----------
@@ -197,6 +218,12 @@ closing ``}`` of the function, add the code that records the event:
 The ISR does not toggle the LED: the worker thread does that. If the queue is
 full, ``k_msgq_put()`` returns an error and the event is lost. We ignore that
 for now.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zapi:`System Clock APIs <clock__apis>` (``k_uptime_get_32()``)
+   - :zapi:`GPIO API <gpio__interface>` (``gpio_pin_get_dt()``)
 
 Step 3: the worker thread
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -359,6 +386,14 @@ watch the board. Undo the change afterwards.
 
   Without the last line, the interval is 60 seconds, and you may think it does
   not work.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Atomic services <kernel/services/other/atomic>`
+   - :zapi:`Atomic Services APIs <atomic__apis>` (``atomic_inc()``, ``atomic_get()``)
+   - :zdoc:`Thread analyzer <services/debugging/thread-analyzer>`
+   - :zkconfig:`CONFIG_THREAD_ANALYZER_AUTO_INTERVAL`
 
 Discussion
 ----------

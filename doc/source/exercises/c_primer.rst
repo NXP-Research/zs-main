@@ -80,6 +80,12 @@ Names in ``UPPER_CASE`` with parentheses, like ``GPIO_DT_SPEC_GET(...)`` or
 ``K_MSGQ_DEFINE(...)``, are **macros**: they also get replaced by code before
 compiling. You use them like functions.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zapi:`API reference: Kernel APIs <kernel__apis>`: every function and
+     macro has a page that explains its parameters and its return value.
+
 Functions
 ---------
 
@@ -97,7 +103,8 @@ type** (``void`` means: returns nothing), the **name**, and the
 ``{`` and ``}``.
 
 ``ARG_UNUSED(dev);`` tells the compiler "I know I don't use this parameter",
-so that it does not warn about it.
+so that it does not warn about it. It is one of Zephyr's
+:zapi:`utility macros <sys-util>`.
 
 A function must be defined (or declared) **above** the place where it is used.
 
@@ -212,7 +219,8 @@ A ``struct`` groups several variables into one. The ``= { .name = value }``
 form sets the fields by name. ``evt.timestamp_ms`` reads one field.
 
 Zephyr uses structs everywhere. ``struct gpio_dt_spec`` bundles the GPIO
-controller, the pin number and the flags of one LED or button.
+controller, the pin number and the flags of one LED or button. The
+:zapi:`GPIO API <gpio__interface>` page lists its fields.
 
 Pointers and ``&``
 ------------------
@@ -264,6 +272,11 @@ of a GPIO controller. ``BIT(n)`` is a number with only bit ``n`` set:
 ``BIT(0)`` is 1, ``BIT(3)`` is 8, ``BIT(7)`` is 128. So ``BIT(button.pin)``
 means "only the button pin".
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zapi:`Utility functions <sys-util>` (``BIT()``, ``ARG_UNUSED()``)
+
 ``printk()`` format strings
 ---------------------------
 
@@ -301,3 +314,9 @@ by the next value after the string:
 
 ``\n`` starts a new line. The compiler checks that the placeholders match the
 values, and warns if they don't.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Logging <services/logging/index>`: the next step after
+     ``printk()``, with log levels and less impact on timing.

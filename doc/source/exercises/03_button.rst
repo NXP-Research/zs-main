@@ -42,6 +42,12 @@ changes, and Zephyr calls our **callback** function.
    :align: center
    :alt: Pressing SW2 makes the GPIO hardware raise an interrupt. Zephyr calls the button_pressed callback in ISR context, which toggles the red LED. main() only sets this up once and returns.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Interrupts <kernel/services/interrupts>`
+   - :zdoc:`GPIO <hardware/peripherals/gpio>`
+
 LEDs and buttons in Devicetree
 ------------------------------
 
@@ -76,6 +82,12 @@ All GPIO functions ending in ``_dt`` take a pointer to it:
 .. code-block:: c
 
    static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(DT_ALIAS(sw0), gpios);
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Devicetree access from C/C++ <build/dts/api-usage>`
+   - :zapi:`Devicetree GPIO API <devicetree-gpio>`
 
 Interrupt setup, step by step
 -----------------------------
@@ -113,6 +125,12 @@ The callback function must have this signature:
                               uint32_t pins)
 
 ``pins`` is a bit mask of the pins that triggered the interrupt.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zapi:`GPIO API <gpio__interface>` (``gpio_pin_interrupt_configure_dt()``, ``gpio_init_callback()``, ``gpio_add_callback_dt()``, ``GPIO_INT_EDGE_TO_ACTIVE``)
+   - :zapi:`Utility functions <sys-util>` (``BIT()``)
 
 Your tasks
 ----------
@@ -283,6 +301,14 @@ Rules of thumb for code in an ISR:
    by a fatal error report. The kernel caught your mistake and stopped.
 
 4. Remove both lines again, save both files, and rebuild.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Interrupts <kernel/services/interrupts>`
+   - :zapi:`Interrupt Service Routine APIs <isr__apis>` (``k_is_in_isr()``)
+   - :zdoc:`Fatal errors and assertions <kernel/services/other/fatal>`
+   - :zkconfig:`CONFIG_ASSERT`
 
 Going further
 -------------

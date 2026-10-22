@@ -156,6 +156,13 @@ Things to notice:
   ``rng_next()``. Seed it with ``rng_mix()`` using the timestamps of the
   player's button presses, which are unpredictable enough for a game.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Kernel timing <kernel/services/timing/clocks>`
+   - :zapi:`System Clock APIs <clock__apis>` (``k_cycle_get_32()``, ``k_cyc_to_us_floor32()``, ``K_MSEC()``)
+   - :zapi:`Message Queue APIs <msgq__apis>` (``k_msgq_get()``, ``k_msgq_purge()``)
+
 Your tasks
 ----------
 
@@ -219,6 +226,11 @@ starts with ``Step 1:``. **Below** the end of that comment (the line with
       };
 
       k_msgq_put(&button_msgq, &evt, K_NO_WAIT);
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zapi:`GPIO API <gpio__interface>` (``GPIO_INT_EDGE_BOTH``, ``gpio_pin_get_dt()``)
 
 Step 2: the game loop
 ~~~~~~~~~~~~~~~~~~~~~
@@ -381,6 +393,13 @@ Ideas for extensions
 - **Shell:** add ``CONFIG_SHELL=y`` to
   ``zephyr/samples/workshop/reaction_game/prj.conf`` and add a ``game stats``
   command. See ``zephyr/samples/subsys/shell/shell_module`` for an example.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Timers <kernel/services/timing/timers>`
+   - :zdoc:`Shell <services/shell/index>`
+   - :zkconfig:`CONFIG_SHELL`
 
 Discussion
 ----------

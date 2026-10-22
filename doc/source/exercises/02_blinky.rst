@@ -55,6 +55,11 @@ Now open the source file. Keep it open while you read the next sections:
 
    code zephyr/samples/basic/blinky/src/main.c
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Blinky sample <samples/basic/blinky/README>`
+
 Where does "the LED" come from? Devicetree
 ------------------------------------------
 
@@ -108,6 +113,14 @@ A ``struct gpio_dt_spec`` bundles everything the GPIO API needs: the GPIO
 controller **device** (``led.port``), the pin number (``led.pin``) and the
 flags (``led.dt_flags``, for example active low).
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Devicetree guide <build/dts/index>`
+   - :zdoc:`Syntax and structure <build/dts/intro-syntax-structure>`
+   - :zdoc:`Devicetree access from C/C++ <build/dts/api-usage>`
+   - :zapi:`DT_ALIAS() and node identifiers <devicetree-generic-id>`
+
 The device model
 ----------------
 
@@ -134,6 +147,14 @@ into a ``gpio_dt_spec``, and at run time the GPIO driver drives the pin:
    :align: center
    :alt: At build time the led0 alias in the board Devicetree becomes a gpio_dt_spec in C. At run time main() calls gpio_pin_toggle_dt, the GPIO driver drives pin P3_12 and the LED turns on or off.
 
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Device driver model <kernel/drivers/index>`
+   - :zapi:`Device model API <device__model>`
+   - :zapi:`GPIO API <gpio__interface>` (``gpio_is_ready_dt()``, ``gpio_pin_configure_dt()``, ``gpio_pin_toggle_dt()``)
+   - :zapi:`Thread APIs <thread__apis>` (``k_msleep()``)
+
 Kconfig: enabling the GPIO driver
 ---------------------------------
 
@@ -147,6 +168,13 @@ configuration file of the application:
 It contains ``CONFIG_GPIO=y``. This enables the GPIO subsystem. On this board
 it happens to be enabled by default already, but it is good practice to write
 in ``prj.conf`` what your application needs.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Configuration system (Kconfig) <build/kconfig/index>`
+   - :zdoc:`Devicetree versus Kconfig <build/dts/dt-vs-kconfig>`
+   - :zkconfig:`CONFIG_GPIO`
 
 Your tasks
 ----------
@@ -257,6 +285,11 @@ end of the build, and compare them with ``hello_world`` (exercise 1). The
 difference is small. Why? Hint: open ``build/zephyr/.config`` and search for
 ``CONFIG_GPIO=``. Remember that this board enables GPIO by default, also for
 ``hello_world``.
+
+.. admonition:: Zephyr |zephyr_version| reference
+   :class: seealso
+
+   - :zdoc:`Devicetree how-tos (overlays) <build/dts/howtos>`
 
 Discussion
 ----------
