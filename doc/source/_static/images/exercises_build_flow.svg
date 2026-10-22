@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="240" viewBox="0 0 880 240" font-family="Lato, Helvetica, Arial, sans-serif" font-size="14" fill="#1b2631">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f4e79"/>
+    </marker>
+  </defs>
+
+  <!-- Source -->
+  <rect x="10" y="40" width="160" height="110" rx="10" fill="#eaf1f8" stroke="#1f4e79" stroke-width="2"/>
+  <text x="90" y="64" text-anchor="middle" font-weight="bold">Your application</text>
+  <text x="90" y="90" text-anchor="middle" font-family="monospace" font-size="12">CMakeLists.txt</text>
+  <text x="90" y="110" text-anchor="middle" font-family="monospace" font-size="12">prj.conf</text>
+  <text x="90" y="130" text-anchor="middle" font-family="monospace" font-size="12">src/main.c</text>
+
+  <line x1="170" y1="95" x2="258" y2="95" stroke="#1f4e79" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="214" y="84" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold">west build</text>
+
+  <!-- Image -->
+  <rect x="260" y="40" width="160" height="110" rx="10" fill="#eaf1f8" stroke="#1f4e79" stroke-width="2"/>
+  <text x="340" y="64" text-anchor="middle" font-weight="bold">Firmware image</text>
+  <text x="340" y="92" text-anchor="middle" font-family="monospace" font-size="12">build/zephyr/</text>
+  <text x="340" y="110" text-anchor="middle" font-family="monospace" font-size="12">zephyr.elf</text>
+  <text x="340" y="134" text-anchor="middle" font-size="12" fill="#566573">your code + Zephyr</text>
+
+  <line x1="420" y1="95" x2="508" y2="95" stroke="#1f4e79" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="464" y="84" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold">west flash</text>
+
+  <!-- Board -->
+  <rect x="510" y="40" width="160" height="110" rx="10" fill="#e8f6ef" stroke="#1e8449" stroke-width="2"/>
+  <text x="590" y="64" text-anchor="middle" font-weight="bold">FRDM-MCXA156</text>
+  <text x="590" y="92" text-anchor="middle" font-size="13">boots Zephyr,</text>
+  <text x="590" y="110" text-anchor="middle" font-size="13">then calls main()</text>
+
+  <line x1="670" y1="95" x2="718" y2="95" stroke="#1f4e79" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="694" y="84" text-anchor="middle" font-size="12" font-weight="bold">UART</text>
+
+  <!-- Terminal -->
+  <rect x="720" y="40" width="150" height="110" rx="10" fill="#1b2631" stroke="#1b2631" stroke-width="2"/>
+  <text x="795" y="64" text-anchor="middle" font-weight="bold" fill="#ffffff">Serial terminal</text>
+  <text x="732" y="94" font-family="monospace" font-size="11" fill="#58d68d">*** Booting</text>
+  <text x="732" y="110" font-family="monospace" font-size="11" fill="#58d68d">Zephyr OS ***</text>
+  <text x="732" y="130" font-family="monospace" font-size="11" fill="#58d68d">Hello World!</text>
+
+  <!-- What west build adds -->
+  <line x1="214" y1="166" x2="214" y2="104" stroke="#566573" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+  <rect x="10" y="168" width="410" height="58" rx="10" fill="#f8f9f9" stroke="#566573" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="215" y="190" text-anchor="middle" font-size="13">Zephyr adds: the board files (Devicetree, defconfig),</text>
+  <text x="215" y="210" text-anchor="middle" font-size="13">the kernel and the drivers you enabled in Kconfig</text>
+</svg>
