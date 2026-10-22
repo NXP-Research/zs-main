@@ -16,7 +16,8 @@ author = 'NXP'
 extensions = ["sphinx_tabs.tabs"]
 
 templates_path = ['_templates']
-exclude_patterns = []
+# files pulled in with '.. include::', not standalone pages
+exclude_patterns = ['exercises/_include']
 
 
 # -- Options for HTML output -------------------------------------------------

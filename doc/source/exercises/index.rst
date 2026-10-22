@@ -5,7 +5,10 @@ Introduction
 
 In this workshop you go from "Hello World" to a small reaction-time game,
 learning one core Zephyr concept per step. Each exercise builds on the
-previous one, so do them in order.
+concepts of the previous one, so do them in order. But each exercise page is
+complete on its own: it tells you how to set up, which files to open, what to
+change and how to build. If you could not finish an exercise, you can still
+start the next one.
 
 .. list-table::
    :header-rows: 1
@@ -67,13 +70,16 @@ Zephyr application with a starter and a solution:
        └── src/
            └── main.c
 
-The starter in ``src/`` always builds, but it does almost nothing: the
-comments tell you, step by step, what to add. Most of the code you need comes
-from the previous exercise, so keep your own code from one exercise to the
-next.
+The starter in ``src/`` always builds, but it does almost nothing: its
+comments, named ``Step 1``, ``Step 2``, ..., match the steps on the exercise
+page. The starters of later exercises already contain the setup code you
+wrote in earlier ones (for example the LED and button setup), so you only
+write the code for the new concepts, and you don't need your own code from a
+previous exercise.
 
-If you get stuck, look at ``solution/``. That is what it is there for. You can
-also build and flash the solution to see how the result should behave:
+The ``solution/`` folder is there in case you get stuck, or want to finish an
+exercise at home. You can also build and flash the solution to see how the
+result should behave:
 
 .. code-block:: bash
 
@@ -129,7 +135,10 @@ numbers:
 Everyday commands
 -----------------
 
-Run these from ``zephyr-workdir`` with the virtual environment active:
+Run these from your work directory (``~/zephyr-workdir`` on Linux,
+``~\Desktop\zephyr-workdir`` on Windows), with the virtual environment active.
+Each exercise page explains how to get there in its *Before you start*
+section.
 
 .. code-block:: bash
 
