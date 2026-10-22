@@ -105,11 +105,17 @@ automatically after boot:
 - ``main()`` itself runs in a thread, with priority 0 by default.
 
 In this exercise you write two threads: ``worker`` (priority 5) handles the
-button, and ``heartbeat`` (priority 7) blinks the green LED on its own.
+button, and ``heartbeat`` (priority 7) blinks the green LED on its own. Here
+are all the threads of this exercise, ordered by priority:
 
-**Who runs first?** All three threads are ready right after boot. You might
-worry that ``worker`` uses the LED before ``main()`` has configured it. It
-does not, for two reasons:
+.. image:: ../_static/images/exercises_threads_priorities.svg
+   :align: center
+   :alt: Priority ladder. At the top, above all threads, the ISR button_pressed(), which interrupts any thread. Then the cooperative priorities below 0, not used here. Then the preemptible priorities: main at 0, worker at 5, heartbeat at 7, and the idle thread at the lowest priority. The rule: the scheduler runs the highest-priority thread that is ready.
+
+**Who runs first?** At the end of the boot, Zephyr makes ``worker`` and
+``heartbeat`` ready, and then calls ``main()``. You might worry that ``worker``
+uses the LED before ``main()`` has configured it. It does not, for two
+reasons:
 
 - ``main()`` has priority 0, which is higher than 5 and 7. The scheduler runs
   ``main()`` first, and the other threads only get the CPU when ``main()``
@@ -117,6 +123,10 @@ does not, for two reasons:
 - Even with other priorities, the code is safe. ``worker`` first waits on the
   queue, and the queue stays empty until ``main()`` enables the button
   interrupt. ``heartbeat`` configures its own LED before it uses it.
+
+.. image:: ../_static/images/exercises_threads_startup.svg
+   :align: center
+   :alt: Start-up timeline with one lane per thread. 1: Zephyr boots in the main thread. 2: worker and heartbeat become ready, but main runs first because priority 0 is higher; main sets up the GPIOs and enables the button interrupt. 3: main returns; worker runs and blocks in k_msgq_get(), then heartbeat runs and sleeps in k_msleep(1000). 4: no thread is ready, so the idle thread runs.
 
 .. admonition:: Zephyr |zephyr_version| reference
    :class: seealso
@@ -302,6 +312,13 @@ Save (**Ctrl+S**), then:
 The red LED toggles on each press, while the green LED blinks on its own. Both
 are in the same RGB LED, so you will see the colors mix.
 
+This is what the scheduler does while your program runs. The threads spend
+almost all of their time waiting, so the CPU is mostly in the idle thread:
+
+.. image:: ../_static/images/exercises_threads_schedule.svg
+   :align: center
+   :alt: Timeline over 2.5 seconds with lanes for ISR, worker, heartbeat and idle. heartbeat runs very briefly at 1 s and 2 s to toggle the green LED. At 1.3 s SW2 is pressed: the ISR runs and calls k_msgq_put(), then worker runs right after it, toggles the red LED, prints and waits again. The rest of the time idle runs.
+
 .. code-block:: none
 
    Press SW2: the worker thread toggles the red LED
@@ -324,6 +341,10 @@ The rule: a real press comes after a **quiet** time. Accept a press only if
 there was no edge at all during the last ``DEBOUNCE_MS``. Every edge, also an
 ignored one, restarts the quiet time. This is easy now, because each message
 carries its timestamp, and the ISR sends every edge, presses and releases.
+
+.. image:: ../_static/images/exercises_debounce.svg
+   :align: center
+   :alt: Button signal for one press: a burst of bounce edges when pressed, a long time held down, and another burst when released, eight edges in total. Only edge 1 counts as a press: the button was quiet for 50 ms before it and the pin reads pressed. Edges 2 to 5 and 7 and 8 come less than 50 ms after the previous edge and are ignored. Edge 6 is quiet but reads released and is ignored. Edge 7 looks like a press long after the last accepted press; only the quiet-since-last-edge rule drops it.
 
 1. In ``worker_thread()``, below ``uint32_t press_count = 0;``, add:
 

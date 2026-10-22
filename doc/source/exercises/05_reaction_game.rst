@@ -144,7 +144,12 @@ Things to notice:
   the thread filtered them. This time the ISR does it: it sends a press only
   if there was no edge during the last ``DEBOUNCE_MS`` and the pin reads
   "pressed". That is one subtraction and one pin read, cheap enough for an
-  ISR, and it keeps the game logic simple.
+  ISR, and it keeps the game logic simple. It is the same rule as in
+  exercise 4:
+
+  .. image:: ../_static/images/exercises_debounce.svg
+     :align: center
+     :alt: Button signal for one press: a burst of bounce edges when pressed, a long time held down, and another burst when released, eight edges in total. Only edge 1 counts as a press: the button was quiet for 50 ms before it and the pin reads pressed. All other edges are ignored, either because they come less than 50 ms after the previous edge, or because the pin reads released.
 - **Emptying the queue.** Presses that the player made at the wrong moment,
   for example while the game was printing, wait in the queue. The game would
   read them later and start a round on its own, or say "Too early!" for no

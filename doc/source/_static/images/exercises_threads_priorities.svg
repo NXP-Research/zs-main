@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="400" viewBox="0 0 780 400" font-family="Lato, Helvetica, Arial, sans-serif" font-size="14" fill="#1b2631">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f4e79"/>
+    </marker>
+  </defs>
+
+  <!-- Direction arrow -->
+  <line x1="40" y1="370" x2="40" y2="40" stroke="#1f4e79" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="58" y="44" font-weight="bold" font-size="13" fill="#1f4e79">runs first</text>
+  <text x="58" y="370" font-size="13" fill="#566573">runs last</text>
+
+  <!-- ISR band: above all threads -->
+  <rect x="150" y="30" width="400" height="44" rx="10" fill="#fdebd0" stroke="#b9770e" stroke-width="2"/>
+  <text x="170" y="57" font-weight="bold">ISR</text>
+  <text x="220" y="57" font-size="12">button_pressed(): not a thread, interrupts any thread</text>
+
+  <!-- Cooperative band (not used) -->
+  <rect x="150" y="86" width="400" height="40" rx="8" fill="#f4f6f7" stroke="#aab7b8" stroke-dasharray="5,4"/>
+  <text x="110" y="111" text-anchor="middle" font-family="monospace" font-size="12" fill="#808b96">&lt; 0</text>
+  <text x="170" y="111" font-size="12" fill="#808b96">negative: cooperative threads (not used in this exercise)</text>
+
+  <!-- Preemptible ladder -->
+  <rect x="150" y="136" width="400" height="232" rx="10" fill="#eafaf1" stroke="none"/>
+  <text x="570" y="152" font-size="12" fill="#1e8449" font-weight="bold">preemptible</text>
+  <text x="570" y="168" font-size="12" fill="#1e8449">(priority &gt;= 0)</text>
+
+  <!-- main, 0 -->
+  <text x="110" y="168" text-anchor="middle" font-family="monospace" font-size="13">0</text>
+  <rect x="170" y="148" width="360" height="32" rx="6" fill="#e8f6ef" stroke="#1e8449" stroke-width="2"/>
+  <text x="185" y="169" font-weight="bold">main</text>
+  <text x="250" y="169" font-size="12">sets up the LED, the button and the interrupt</text>
+
+  <!-- 1..4 -->
+  <text x="110" y="204" text-anchor="middle" font-family="monospace" font-size="13" fill="#808b96">1 ... 4</text>
+  <line x1="170" y1="200" x2="530" y2="200" stroke="#aab7b8" stroke-dasharray="3,4"/>
+
+  <!-- worker, 5 -->
+  <text x="110" y="240" text-anchor="middle" font-family="monospace" font-size="13">5</text>
+  <rect x="170" y="220" width="360" height="32" rx="6" fill="#e8f6ef" stroke="#1e8449" stroke-width="2"/>
+  <text x="185" y="241" font-weight="bold">worker</text>
+  <text x="250" y="241" font-size="12">handles the button events, toggles the red LED</text>
+
+  <!-- 6 -->
+  <text x="110" y="276" text-anchor="middle" font-family="monospace" font-size="13" fill="#808b96">6</text>
+  <line x1="170" y1="272" x2="530" y2="272" stroke="#aab7b8" stroke-dasharray="3,4"/>
+
+  <!-- heartbeat, 7 -->
+  <text x="110" y="312" text-anchor="middle" font-family="monospace" font-size="13">7</text>
+  <rect x="170" y="292" width="360" height="32" rx="6" fill="#e8f6ef" stroke="#1e8449" stroke-width="2"/>
+  <text x="185" y="313" font-weight="bold">heartbeat</text>
+  <text x="262" y="313" font-size="12">blinks the green LED once per second</text>
+
+  <!-- idle -->
+  <text x="110" y="352" text-anchor="middle" font-family="monospace" font-size="13" fill="#808b96">lowest</text>
+  <rect x="170" y="334" width="360" height="28" rx="6" fill="#f4f6f7" stroke="#808b96"/>
+  <text x="185" y="353" font-weight="bold" fill="#566573">idle</text>
+  <text x="250" y="353" font-size="12" fill="#566573">runs only when no other thread is ready</text>
+
+  <!-- Rule -->
+  <rect x="580" y="210" width="190" height="120" rx="10" fill="#eaf1f8" stroke="#1f4e79" stroke-width="2"/>
+  <text x="675" y="236" text-anchor="middle" font-weight="bold" font-size="13">The rule</text>
+  <text x="675" y="260" text-anchor="middle" font-size="12">The scheduler runs the</text>
+  <text x="675" y="278" text-anchor="middle" font-size="12">highest-priority thread</text>
+  <text x="675" y="296" text-anchor="middle" font-size="12">that is ready.</text>
+  <text x="675" y="318" text-anchor="middle" font-size="12" fill="#566573">Lower number = higher</text>
+</svg>

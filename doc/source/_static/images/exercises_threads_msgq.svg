@@ -15,11 +15,14 @@
   <rect x="10" y="80" width="70" height="40" rx="6" fill="#d5d8dc" stroke="#566573"/>
   <text x="45" y="105" text-anchor="middle" font-weight="bold" font-size="13">SW2</text>
   <line x1="80" y1="100" x2="118" y2="100" stroke="#1f4e79" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="45" y="140" text-anchor="middle" font-size="11" fill="#566573">every edge:</text>
+  <text x="45" y="154" text-anchor="middle" font-size="11" fill="#566573">press and</text>
+  <text x="45" y="168" text-anchor="middle" font-size="11" fill="#566573">release</text>
 
   <!-- ISR -->
   <rect x="120" y="50" width="150" height="100" rx="10" fill="#fdebd0" stroke="#b9770e" stroke-width="2"/>
   <text x="195" y="74" text-anchor="middle" font-weight="bold">ISR</text>
-  <text x="195" y="96" text-anchor="middle" font-size="12">record the time,</text>
+  <text x="195" y="96" text-anchor="middle" font-size="12">record time + pressed,</text>
   <text x="195" y="114" text-anchor="middle" font-size="12">send it, don't wait</text>
   <text x="195" y="136" text-anchor="middle" font-family="monospace" font-size="11">K_NO_WAIT</text>
 
@@ -42,8 +45,9 @@
   <rect x="480" y="50" width="160" height="100" rx="10" fill="#e8f6ef" stroke="#1e8449" stroke-width="2"/>
   <text x="560" y="74" text-anchor="middle" font-weight="bold">worker thread</text>
   <text x="560" y="92" text-anchor="middle" font-size="12" fill="#566573">priority 5</text>
-  <text x="560" y="114" text-anchor="middle" font-size="12">sleeps until a message</text>
-  <text x="560" y="136" text-anchor="middle" font-family="monospace" font-size="11">K_FOREVER</text>
+  <text x="560" y="114" text-anchor="middle" font-size="12">sleeps until a message,</text>
+  <text x="560" y="128" text-anchor="middle" font-size="11" fill="#566573">ignores releases and bounce</text>
+  <text x="560" y="144" text-anchor="middle" font-family="monospace" font-size="11">K_FOREVER</text>
 
   <line x1="640" y1="100" x2="698" y2="100" stroke="#1f4e79" stroke-width="2" marker-end="url(#arrow)"/>
   <circle cx="725" cy="100" r="18" fill="#e74c3c" stroke="#922b21" stroke-width="2"/>
