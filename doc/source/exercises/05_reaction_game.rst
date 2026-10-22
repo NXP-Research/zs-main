@@ -74,7 +74,8 @@ can focus on the game:
 - ``button_msgq``: the message queue, for up to 4 ``button_event`` messages.
 - ``button_pressed()``: the callback. Its body is empty: you fill it in.
 - ``setup_gpio()``: configures the LED and the button, enables the button
-  interrupt and registers ``button_pressed()``. ``main()`` already calls it.
+  interrupt on both edges (``GPIO_INT_EDGE_BOTH``, press and release) and
+  registers ``button_pressed()``. ``main()`` already calls it.
 - The timing constants (``MIN_DELAY_MS``, ``MAX_DELAY_MS``,
   ``REACT_TIMEOUT_MS``, ``DEBOUNCE_MS``), the ``enum game_state`` and the
   random number helpers ``rng_mix()`` and ``rng_next()``.
@@ -138,10 +139,18 @@ Things to notice:
   counter, at the moment of the press. The game thread may run a little later,
   but the timestamp is exact. ``k_cyc_to_us_floor32()`` converts cycles to
   microseconds.
-- **Debouncing in the ISR.** A mechanical button *bounces*: one press can
-  produce several interrupts within a few milliseconds. This time we drop
-  bounces directly in the ISR, with a single subtraction. That is cheap enough
-  for an ISR and keeps the game logic simple.
+- **Debouncing in the ISR.** A mechanical button *bounces* when you press and
+  when you release it: several edges within a few milliseconds. In exercise 4
+  the thread filtered them. This time the ISR does it: it sends a press only
+  if there was no edge during the last ``DEBOUNCE_MS`` and the pin reads
+  "pressed". That is one subtraction and one pin read, cheap enough for an
+  ISR, and it keeps the game logic simple.
+- **Emptying the queue.** Presses that the player made at the wrong moment,
+  for example while the game was printing, wait in the queue. The game would
+  read them later and start a round on its own, or say "Too early!" for no
+  reason. ``k_msgq_purge(&button_msgq)`` throws away all waiting messages.
+  The game calls it at the start of ``STATE_IDLE`` and ``STATE_WAITING``, so
+  that only presses made from that moment on count.
 - **Random numbers.** The board configuration has no hardware entropy driver
   enabled, so the starter provides a tiny pseudo-random generator,
   ``rng_next()``. Seed it with ``rng_mix()`` using the timestamps of the
@@ -157,8 +166,8 @@ Open the starter file:
    code zephyr/samples/workshop/reaction_game/src/main.c
 
 Besides the code described in `What the starter already does`_, it contains
-comments named ``Step 1`` and ``Step 2``. Each step below tells you where to
-add code. Don't delete the comments.
+comments named ``Step 1``, ``Step 2`` and ``Step 3 (bonus)``. Each step below
+tells you where to add code. Don't delete the comments.
 
 Build and flash after each step, to catch mistakes early:
 
@@ -178,23 +187,28 @@ Go to the function ``button_pressed()``. Inside it, find the comment that
 starts with ``Step 1:``. **Below** the end of that comment (the line with
 ``*/``), and above the closing ``}`` of the function, add:
 
-1. A variable that remembers the time of the last accepted press, between
-   calls (``static`` keeps its value):
+1. A variable that remembers the time of the last edge, between calls
+   (``static`` keeps its value):
 
    .. code-block:: c
 
-      static uint32_t last_cycles;
+      static uint32_t last_edge_cycles;
 
 2. Read the cycle counter: ``uint32_t now = k_cycle_get_32();``.
-3. Drop bounces. If less than ``DEBOUNCE_MS`` passed since the last accepted
-   press, return without doing anything:
+3. Drop bounces and releases. Check whether the button was quiet for
+   ``DEBOUNCE_MS``, then remember this edge, **also** when you ignore it.
+   Return without doing anything if it was not quiet, or if the button does
+   not read "pressed":
 
    .. code-block:: c
 
-      if (k_cyc_to_ms_floor32(now - last_cycles) < DEBOUNCE_MS) {
+      bool quiet = k_cyc_to_ms_floor32(now - last_edge_cycles) >= DEBOUNCE_MS;
+
+      last_edge_cycles = now;
+
+      if (!quiet || gpio_pin_get_dt(&button) != 1) {
               return;
       }
-      last_cycles = now;
 
 4. Send the event:
 
@@ -219,10 +233,11 @@ All of this goes into ``main()``.
       enum game_state state = STATE_IDLE;
       struct button_event evt;
       uint32_t led_on_cycles = 0;
-      uint32_t round = 1;
+      uint32_t round_no = 1;
 
    ``evt`` receives the messages, ``led_on_cycles`` remembers when the LED
-   turned on, and ``round`` counts the rounds.
+   turned on, and ``round_no`` counts the rounds. (Don't call it ``round``:
+   that is already the name of a C math function.)
 
 2. **The loop.** In ``main()``, find the comment that starts with
    ``Step 2:``. **Below** the end of that comment, and **above**
@@ -249,9 +264,10 @@ All of this goes into ``main()``.
    Now fill in the three cases.
 
    a. ``STATE_IDLE``: print ``"\nPress SW2 to start round %u\n"`` with
-      ``round``. Wait for a press with
-      ``k_msgq_get(&button_msgq, &evt, K_FOREVER);``. Seed the random generator
-      with ``rng_mix(evt.cycles);``. Set ``state = STATE_WAITING;``.
+      ``round_no``. Empty the queue with ``k_msgq_purge(&button_msgq);``.
+      Wait for a press with ``k_msgq_get(&button_msgq, &evt, K_FOREVER);``.
+      Seed the random generator with ``rng_mix(evt.cycles);``. Set
+      ``state = STATE_WAITING;``.
 
    b. ``STATE_WAITING``:
 
@@ -267,6 +283,8 @@ All of this goes into ``main()``.
         ``}`` after its ``break;``.
       - Print ``"Get ready... press when the LED turns on!\n"`` and make sure
         the LED is off: ``gpio_pin_set_dt(&led, 0);``.
+      - Empty the queue again: ``k_msgq_purge(&button_msgq);``. Only presses
+        from now on may count as "too early".
       - Wait for a press, with the delay as timeout:
         ``k_msgq_get(&button_msgq, &evt, K_MSEC(delay_ms))``. If it returns
         ``0``, the player pressed too early: print
@@ -293,7 +311,7 @@ All of this goes into ``main()``.
            printk("  Reaction time: %u.%03u ms\n", reaction_us / 1000,
                   reaction_us % 1000);
 
-        Then add 1 to ``round``.
+        Then add 1 to ``round_no``.
       - Otherwise print ``"  Too slow! (more than %d ms)\n"`` with
         ``REACT_TIMEOUT_MS``.
       - Set ``state = STATE_IDLE;``.
@@ -312,7 +330,9 @@ If you are stuck, the complete solution is in
 Step 3 (bonus): statistics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Print the best and the average reaction time after each round:
+Find the comment that starts with ``Step 3 (bonus):``. You don't add code
+below it: the code goes into the loop of step 2. Print the best and the
+average reaction time after each round:
 
 .. code-block:: none
 
@@ -331,7 +351,7 @@ Print the best and the average reaction time after each round:
    a new best.
 
 2. In ``STATE_REACT``, below the ``printk("  Reaction time: ...`` call and
-   above ``round++;``, add:
+   above ``round_no++;``, add:
 
    .. code-block:: c
 
@@ -340,8 +360,8 @@ Print the best and the average reaction time after each round:
               best_us = reaction_us;
               printk("  New best!\n");
       }
-      printk("  Rounds: %u, best: %u ms, average: %u ms\n", round,
-             best_us / 1000, (uint32_t)(total_us / round / 1000));
+      printk("  Rounds: %u, best: %u ms, average: %u ms\n", round_no,
+             best_us / 1000, (uint32_t)(total_us / round_no / 1000));
 
 3. Save, build and flash.
 
@@ -369,15 +389,28 @@ Discussion
 - Which variables are accessed from both the ISR and a thread? Why is that
   safe here?
 - What happens to button presses that arrive while the game is printing?
+  What would happen without ``k_msgq_purge()``?
 
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/workshop/reaction_game`` and get
-the original files back, run this in your work directory:
+To undo all your changes in ``zephyr/samples/workshop/reaction_game`` and get the original
+files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
    git -C zephyr checkout -- samples/workshop/reaction_game
+   git -C zephyr clean -fd -- samples/workshop/reaction_game
+
+The first command restores the files that came with Zephyr. The second
+one deletes the files that you **created** in that folder, for example an
+overlay file.
+
+.. warning::
+
+   These commands cannot be undone. All your changes in
+   ``zephyr/samples/workshop/reaction_game`` are lost, and the files you created there are
+   deleted. If you want to keep your work, copy the folder somewhere else
+   first.
 
 .. include:: _include/troubleshooting.rst

@@ -43,5 +43,6 @@ If something goes wrong
 
    * - You broke the file and want to start over
      - Restore the original files of the application folder with ``git``
-       (see the command in `Start over`_). This **deletes all your changes**
-       in that folder.
+       (see the commands in `Start over`_). This **deletes all your
+       changes** in that folder, and the files you created there. It cannot
+       be undone.

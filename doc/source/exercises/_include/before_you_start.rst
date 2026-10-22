@@ -32,11 +32,11 @@ environment.**
       Open **Windows PowerShell** (press the **Win** key, type
       ``powershell``, press **Enter**) and run these three commands:
 
-      .. code-block:: powershell
+      .. parsed-literal::
 
-         cd ~\Desktop\zephyr-workdir
-         ~\Desktop\zephyr-workdir\zephyr-workshop\ENV\Scripts\Activate.ps1
-         $env:Path += ";C:\NXP\LinkServer_26.9.130"
+         cd ~\\Desktop\\zephyr-workdir
+         ~\\Desktop\\zephyr-workdir\\zephyr-workshop\\ENV\\Scripts\\Activate.ps1
+         |linkserver_path_cmd|
 
       Your prompt must now start with ``(ENV)``. If it does not, the ``west``
       command will not work. The last command lets ``west flash`` find

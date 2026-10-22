@@ -48,6 +48,11 @@ Before you start, make sure you have completed the
 :doc:`infrastructure setup <../infrastructure/index>` and that you can
 :doc:`flash the board <../flashing_the_board>`.
 
+If you have never written C, read :doc:`The C you need <c_primer>` first. It
+explains the C constructs that the exercises use. Words such as *ISR*,
+*Devicetree* or *message queue* are explained in the
+:doc:`glossary <glossary>`.
+
 How the exercises are organized
 -------------------------------
 

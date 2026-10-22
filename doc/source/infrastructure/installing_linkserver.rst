@@ -37,15 +37,15 @@ Installation
 
          You'll need to accept the EULA before downloading the installer.
 
-      You should now have **LinkServer_26.9.130.x86_64.deb.bin** in your **Downloads** folder.
+      You should now have |linkserver_deb_bold| in your **Downloads** folder.
       To execute it:
 
-      .. code:: bash
+      .. parsed-literal::
 
          cd ~/Downloads
-         chmod +x LinkServer_26.9.130.x86_64.deb.bin
+         chmod +x |linkserver_deb|
          # you'll need sudo for this!
-         sudo ./LinkServer_26.9.130.x86_64.deb.bin
+         sudo ./|linkserver_deb|
 
       After executing the binary, you'll be greeted with the following EULA:
 
@@ -97,7 +97,7 @@ Installation
 
          You'll need to accept the EULA before downloading the installer.
 
-      You should now have **LinkServer_26.9.130.exe** in your **Downloads** folder.
+      You should now have |linkserver_exe_bold| in your **Downloads** folder.
       Double-click to execute it and go through all installation steps (you can just
       keep clicking **Next** until the package is installed).
 
@@ -111,9 +111,9 @@ Installation
 
          By default, LinkServer will not be added to your PATH. To do so, run:
 
-            .. code:: powershell
+            .. parsed-literal::
 
-               $env:Path += ";C:\NXP\LinkServer_26.9.130"
+               |linkserver_path_cmd|
 
          This change is not persistent. You'll have to do it each time you open a new
          PowerShell session!

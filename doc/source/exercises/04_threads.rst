@@ -54,6 +54,10 @@ can focus on threads:
   registers ``button_pressed()``. Then it returns. You don't change
   ``main()``.
 
+The interrupt is configured with ``GPIO_INT_EDGE_BOTH``: unlike in exercise 3,
+``button_pressed()`` runs when the button is pressed **and** when it is
+released. You will see why in step 6.
+
 Why not do everything in the ISR?
 ---------------------------------
 
@@ -98,6 +102,17 @@ automatically after boot:
 In this exercise you write two threads: ``worker`` (priority 5) handles the
 button, and ``heartbeat`` (priority 7) blinks the green LED on its own.
 
+**Who runs first?** All three threads are ready right after boot. You might
+worry that ``worker`` uses the LED before ``main()`` has configured it. It
+does not, for two reasons:
+
+- ``main()`` has priority 0, which is higher than 5 and 7. The scheduler runs
+  ``main()`` first, and the other threads only get the CPU when ``main()``
+  waits or returns.
+- Even with other priorities, the code is safe. ``worker`` first waits on the
+  queue, and the queue stays empty until ``main()`` enables the button
+  interrupt. ``heartbeat`` configures its own LED before it uses it.
+
 Message queues
 --------------
 
@@ -106,7 +121,8 @@ A ``k_msgq`` is a thread-safe FIFO of fixed-size messages, copied by value:
 .. code-block:: c
 
    struct button_event {
-           uint32_t timestamp_ms;
+           uint32_t timestamp_ms;  /* when it happened */
+           bool pressed;           /* true: pressed, false: released */
    };
 
    /* name, size of one message, max number of messages, alignment */
@@ -171,14 +187,16 @@ closing ``}`` of the function, add the code that records the event:
 
    struct button_event evt = {
            .timestamp_ms = k_uptime_get_32(),
+           .pressed = (gpio_pin_get_dt(&button) == 1),
    };
 
    k_msgq_put(&button_msgq, &evt, K_NO_WAIT);
 
-``k_uptime_get_32()`` returns the time since boot in milliseconds. The ISR
-does not toggle the LED: the worker thread does that. If the queue is full,
-``k_msgq_put()`` returns an error and the event is lost. We ignore that for
-now.
+``k_uptime_get_32()`` returns the time since boot in milliseconds.
+``gpio_pin_get_dt()`` reads the button: ``1`` means pressed. It is ISR-safe.
+The ISR does not toggle the LED: the worker thread does that. If the queue is
+full, ``k_msgq_put()`` returns an error and the event is lost. We ignore that
+for now.
 
 Step 3: the worker thread
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -194,9 +212,11 @@ comment: ``static void worker_thread(void *p1, void *p2, void *p3)``. Inside:
    a. Wait for the next event:
       ``k_msgq_get(&button_msgq, &evt, K_FOREVER);``. The thread sleeps here
       until the ISR sends a message.
-   b. Add 1 to ``press_count``.
-   c. Toggle the red LED: ``gpio_pin_toggle_dt(&led);``.
-   d. Print the time and the counter:
+   b. Skip releases: ``if (!evt.pressed) { continue; }``. ``continue`` jumps
+      back to the start of the loop and waits for the next event.
+   c. Add 1 to ``press_count``.
+   d. Toggle the red LED: ``gpio_pin_toggle_dt(&led);``.
+   e. Print the time and the counter:
       ``printk("[%6u ms] press %u\n", evt.timestamp_ms, press_count);``.
 
 The bonus in the comment (debounce) comes later, in step 6.
@@ -267,30 +287,38 @@ If you are stuck, the complete solution is in
 Step 6 (bonus): debounce
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-A mechanical button *bounces*: one press can produce several interrupts within
-a few milliseconds, so the counter jumps by 2 or 3. Ignore the events that
-arrive less than ``DEBOUNCE_MS`` after the last accepted one. This is easy now,
-because each message carries its timestamp.
+A mechanical button *bounces*: the contacts open and close several times
+within a few milliseconds, both when you press **and** when you release it.
+Each bounce is an edge, so one press can produce several "pressed" events, and
+the counter jumps by 2 or 3. Even a release can produce a "pressed" event,
+when the contact bounces back for a moment.
+
+The rule: a real press comes after a **quiet** time. Accept a press only if
+there was no edge at all during the last ``DEBOUNCE_MS``. Every edge, also an
+ignored one, restarts the quiet time. This is easy now, because each message
+carries its timestamp, and the ISR sends every edge, presses and releases.
 
 1. In ``worker_thread()``, below ``uint32_t press_count = 0;``, add:
 
    .. code-block:: c
 
-      uint32_t last_press_ms = 0;
+      uint32_t last_edge_ms = 0;
 
-2. In the loop, below the ``k_msgq_get(...)`` line and above
-   ``press_count++;``, add:
+2. In the loop, replace the line ``if (!evt.pressed) { continue; }`` from
+   step 3 with:
 
    .. code-block:: c
 
-      if (press_count > 0 && (evt.timestamp_ms - last_press_ms) < DEBOUNCE_MS) {
+      bool quiet = (evt.timestamp_ms - last_edge_ms) >= DEBOUNCE_MS;
+
+      last_edge_ms = evt.timestamp_ms;
+
+      if (!evt.pressed || !quiet) {
               continue;
       }
-      last_press_ms = evt.timestamp_ms;
 
-   ``continue`` skips the rest of the loop and waits for the next event.
-
-3. Save, run ``west build`` and ``west flash``. Each press now counts once.
+3. Save, run ``west build`` and ``west flash``. Each press now counts once,
+   also when you hold the button for a few seconds before you release it.
 
 Going further
 -------------
@@ -309,44 +337,57 @@ watch the board. Undo the change afterwards.
   from ``8`` to ``1``. In ``worker_thread()``, add ``k_msleep(2000);`` at the
   end of the loop, to simulate slow work. Press the button quickly several
   times. What happens to the extra presses? To count them, add a variable
-  ``static uint32_t dropped_events;`` and, in ``button_pressed()``, add 1 to
-  it when ``k_msgq_put()`` returns a value other than 0. Print it in the
-  worker. The solution file does this.
-- **Priorities and starvation.** In ``worker_thread()``, below
-  ``gpio_pin_toggle_dt(&led);``, add ``k_busy_wait(3000000);`` (3 s of
-  busy-waiting: the CPU spins without sleeping). Press the button: the
-  heartbeat LED **stops** for 3 s, because the higher-priority worker never
-  gives up the CPU. Now swap the priorities: at the top of the file, set
-  ``WORKER_PRIORITY`` to ``7`` and ``HEARTBEAT_PRIORITY`` to ``5``. Try again.
-  Then replace ``k_busy_wait(3000000)`` with ``k_msleep(3000)`` and explain the
-  difference.
+  ``static atomic_t dropped_events;``. In ``button_pressed()``, call
+  ``atomic_inc(&dropped_events);`` when ``k_msgq_put()`` returns a value other
+  than 0. In the worker, print it with ``printk("dropped: %ld\n",
+  atomic_get(&dropped_events));``. The solution file does this.
+
+  Why ``atomic_t`` and not a normal ``uint32_t``? The ISR writes the variable
+  and the worker thread reads it. With ``atomic_t`` and the ``atomic_*()``
+  functions, each access is one operation that an interrupt cannot cut in
+  half. This is the safe way to share a counter between an ISR and a thread.
 - **Stack usage.** Open ``zephyr/samples/workshop/threads/prj.conf`` and add
-  these three lines at the end. The console then prints the stack usage of
-  each thread periodically:
+  these four lines at the end. The console then prints the stack usage of
+  each thread every 5 seconds:
 
   .. code-block:: none
 
      CONFIG_THREAD_NAME=y
      CONFIG_THREAD_ANALYZER=y
      CONFIG_THREAD_ANALYZER_AUTO=y
+     CONFIG_THREAD_ANALYZER_AUTO_INTERVAL=5
+
+  Without the last line, the interval is 60 seconds, and you may think it does
+  not work.
 
 Discussion
 ----------
 
-- What is the difference between ``k_msleep(3000)`` and
-  ``k_busy_wait(3000000)`` for the *other* threads?
 - Why must the ISR use ``K_NO_WAIT``?
 - Why do we put the timestamp into the message instead of reading the time in
   the worker?
+- Why must every edge restart the quiet time, also the edges we ignore?
 
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/workshop/threads`` and get the
-original files back, run this in your work directory:
+To undo all your changes in ``zephyr/samples/workshop/threads`` and get the original
+files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
    git -C zephyr checkout -- samples/workshop/threads
+   git -C zephyr clean -fd -- samples/workshop/threads
+
+The first command restores the files that came with Zephyr. The second
+one deletes the files that you **created** in that folder, for example an
+overlay file.
+
+.. warning::
+
+   These commands cannot be undone. All your changes in
+   ``zephyr/samples/workshop/threads`` are lost, and the files you created there are
+   deleted. If you want to keep your work, copy the folder somewhere else
+   first.
 
 .. include:: _include/troubleshooting.rst

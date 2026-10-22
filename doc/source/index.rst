@@ -26,6 +26,11 @@ Once your setup works, go through the exercises in order:
 - :doc:`Exercise 4: Threads <exercises/04_threads>`
 - :doc:`Exercise 5: Reaction Game <exercises/05_reaction_game>`
 
+New to C or to embedded software? Keep these two pages open while you work:
+
+- :doc:`The C you need <exercises/c_primer>`
+- :doc:`Glossary <exercises/glossary>`
+
 .. toctree::
    :maxdepth: 2
    :hidden:
@@ -45,3 +50,11 @@ Once your setup works, go through the exercises in order:
    exercises/03_button
    exercises/04_threads
    exercises/05_reaction_game
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Reference
+
+   exercises/c_primer
+   exercises/glossary

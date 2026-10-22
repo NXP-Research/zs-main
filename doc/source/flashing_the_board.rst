@@ -138,9 +138,9 @@ You can now flash the application by running:
 
    For Windows hosts, make sure you run
 
-   .. code:: powershell
+   .. parsed-literal::
 
-      $env:Path += ";C:\NXP\LinkServer_26.9.130"
+      |linkserver_path_cmd|
 
    before this!
 

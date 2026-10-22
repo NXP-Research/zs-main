@@ -219,11 +219,23 @@ Discussion
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/hello_world`` and get the
-original files back, run this in your work directory:
+To undo all your changes in ``zephyr/samples/hello_world`` and get the original
+files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
    git -C zephyr checkout -- samples/hello_world
+   git -C zephyr clean -fd -- samples/hello_world
+
+The first command restores the files that came with Zephyr. The second
+one deletes the files that you **created** in that folder, for example an
+overlay file.
+
+.. warning::
+
+   These commands cannot be undone. All your changes in
+   ``zephyr/samples/hello_world`` are lost, and the files you created there are
+   deleted. If you want to keep your work, copy the folder somewhere else
+   first.
 
 .. include:: _include/troubleshooting.rst
