@@ -17,7 +17,7 @@ jobs:
         run: pip3 install sphinx sphinx-rtd-theme sphinx-tabs
 
       - name: Build documentation
-        run: sphinx-build -W -b html doc/ doc/_build/html
+        run: make -C doc html
 
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3
