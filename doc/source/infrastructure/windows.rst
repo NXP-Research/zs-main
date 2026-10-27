@@ -93,7 +93,7 @@ To install the required packages, run:
 
    After installing **python**, please run ``python --version`` to make
    sure that PATH was updated accordingly and that the installed python
-   version is 3.10 or newer.
+   version is 3.12 or newer.
 
    If the command doesn't work, try closing the PowerShell terminal and
    opening a new one to force a reload of the PATH variable.
@@ -121,7 +121,8 @@ To clone the repository:
 
 .. code:: powershell
 
-   git clone https://github.com/NXP-Research/zs-main.git && cd zs-main
+   git clone https://github.com/NXP-Research/zs-main.git
+   cd zs-main
 
 Running the setup script
 ------------------------
@@ -167,7 +168,7 @@ virtual environment created by the **setup.ps1** script. To do so, run:
 
 .. code:: powershell
 
-   ~\Desktop\zephyr-workdir\zephyr-workshop\ENV\Scripts\Activate.ps1
+   ~\Desktop\zephyr-workdir\zs-main\ENV\Scripts\Activate.ps1
 
 .. warning::
 
