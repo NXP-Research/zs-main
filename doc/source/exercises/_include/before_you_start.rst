@@ -35,7 +35,7 @@ environment.**
       .. parsed-literal::
 
          cd ~\\Desktop\\zephyr-workdir
-         ~\\Desktop\\zephyr-workdir\\zephyr-workshop\\ENV\\Scripts\\Activate.ps1
+         ~\\Desktop\\zephyr-workdir\\zs-main\\ENV\\Scripts\\Activate.ps1
          |linkserver_path_cmd|
 
       Your prompt must now start with ``(ENV)``. If it does not, the ``west``
