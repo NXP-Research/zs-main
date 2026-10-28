@@ -21,27 +21,27 @@ start the next one.
 
    * - 1
      - :doc:`Hello Zephyr <01_hello_world>`
-     - ``zephyr/samples/hello_world``
+     - ``zs-zephyr/samples/hello_world``
      - Application structure, ``west``, board selection, build/flash, serial console
 
    * - 2
      - :doc:`Blinky <02_blinky>`
-     - ``zephyr/samples/basic/blinky``
+     - ``zs-zephyr/samples/basic/blinky``
      - GPIO, Devicetree (``led0``, ``gpio_dt_spec``), Kconfig, device model
 
    * - 3
      - :doc:`Button + LED <03_button>`
-     - ``zephyr/samples/workshop/button``
+     - ``zs-zephyr/samples/workshop/button``
      - GPIO input, interrupts, callbacks, ISR context
 
    * - 4
      - :doc:`Threads <04_threads>`
-     - ``zephyr/samples/workshop/threads``
+     - ``zs-zephyr/samples/workshop/threads``
      - Threads, priorities, message queues, blocking vs. non-blocking calls
 
    * - 5
      - :doc:`Reaction Game <05_reaction_game>`
-     - ``zephyr/samples/workshop/reaction_game``
+     - ``zs-zephyr/samples/workshop/reaction_game``
      - Timing, synchronization, state machines
 
 Before you start, make sure you have completed the
@@ -59,12 +59,12 @@ How the exercises are organized
 The first two exercises use samples that come with Zephyr: ``hello_world`` and
 ``basic/blinky``. You read, build and modify them.
 
-Exercises 3 to 5 live in ``zephyr/samples/workshop/``. Each of them is a
+Exercises 3 to 5 live in ``zs-zephyr/samples/workshop/``. Each of them is a
 Zephyr application with a starter and a solution:
 
 .. code-block:: none
 
-   zephyr/samples/workshop/button/
+   zs-zephyr/samples/workshop/button/
    ├── CMakeLists.txt
    ├── prj.conf
    ├── src/
@@ -88,7 +88,7 @@ result should behave:
 
 .. code-block:: bash
 
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/button/solution
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/button/solution
 
 Hardware
 --------
@@ -148,7 +148,7 @@ section.
 .. code-block:: bash
 
    # Build. -p makes a pristine (clean) build.
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/hello_world
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/hello_world
 
    # Rebuild after changing the code (incremental build, much faster)
    west build

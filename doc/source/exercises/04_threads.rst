@@ -19,16 +19,16 @@ calls, ISR vs. thread context.
    :widths: 30 70
 
    * - Application folder
-     - ``zephyr/samples/workshop/threads``
+     - ``zs-zephyr/samples/workshop/threads``
 
    * - File you edit
-     - ``zephyr/samples/workshop/threads/src/main.c``
+     - ``zs-zephyr/samples/workshop/threads/src/main.c``
 
    * - Solution
-     - ``zephyr/samples/workshop/threads/solution/src/main.c``
+     - ``zs-zephyr/samples/workshop/threads/solution/src/main.c``
 
    * - Build command
-     - ``west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/threads``
+     - ``west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/threads``
 
    * - Flash command
      - ``west flash``
@@ -191,7 +191,7 @@ Open the starter file:
 
 .. code-block:: bash
 
-   code zephyr/samples/workshop/threads/src/main.c
+   code zs-zephyr/samples/workshop/threads/src/main.c
 
 Besides the setup described in `What the starter already does`_, the starter
 contains the thread priorities (``WORKER_PRIORITY``, ``HEARTBEAT_PRIORITY``),
@@ -306,7 +306,7 @@ Save (**Ctrl+S**), then:
 
 .. code-block:: bash
 
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/threads
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/threads
    west flash
 
 The red LED toggles on each press, while the green LED blinks on its own. Both
@@ -326,7 +326,7 @@ almost all of their time waiting, so the CPU is mostly in the idle thread:
    [  4518 ms] press 2
 
 If you are stuck, the complete solution is in
-``zephyr/samples/workshop/threads/solution/src/main.c``.
+``zs-zephyr/samples/workshop/threads/solution/src/main.c``.
 
 Step 6 (bonus): debounce
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -394,7 +394,7 @@ watch the board. Undo the change afterwards.
   and the worker thread reads it. With ``atomic_t`` and the ``atomic_*()``
   functions, each access is one operation that an interrupt cannot cut in
   half. This is the safe way to share a counter between an ISR and a thread.
-- **Stack usage.** Open ``zephyr/samples/workshop/threads/prj.conf`` and add
+- **Stack usage.** Open ``zs-zephyr/samples/workshop/threads/prj.conf`` and add
   these four lines at the end. The console then prints the stack usage of
   each thread every 5 seconds:
 
@@ -427,13 +427,13 @@ Discussion
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/workshop/threads`` and get the original
+To undo all your changes in ``zs-zephyr/samples/workshop/threads`` and get the original
 files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
-   git -C zephyr checkout -- samples/workshop/threads
-   git -C zephyr clean -fd -- samples/workshop/threads
+   git -C zs-zephyr checkout -- samples/workshop/threads
+   git -C zs-zephyr clean -fd -- samples/workshop/threads
 
 The first command restores the files that came with Zephyr. The second
 one deletes the files that you **created** in that folder, for example an
@@ -442,7 +442,7 @@ overlay file.
 .. warning::
 
    These commands cannot be undone. All your changes in
-   ``zephyr/samples/workshop/threads`` are lost, and the files you created there are
+   ``zs-zephyr/samples/workshop/threads`` are lost, and the files you created there are
    deleted. If you want to keep your work, copy the folder somewhere else
    first.
 
