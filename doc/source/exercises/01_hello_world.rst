@@ -15,13 +15,13 @@ build/flash process, the serial console.
    :widths: 30 70
 
    * - Application folder
-     - ``zephyr/samples/hello_world``
+     - ``zs-zephyr/samples/hello_world``
 
    * - File you edit
-     - ``zephyr/samples/hello_world/src/main.c``
+     - ``zs-zephyr/samples/hello_world/src/main.c``
 
    * - Build command
-     - ``west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/hello_world``
+     - ``west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/hello_world``
 
    * - Flash command
      - ``west flash``
@@ -36,7 +36,7 @@ A Zephyr application is a folder with at least three files. This is the
 
 .. code-block:: none
 
-   zephyr/samples/hello_world/
+   zs-zephyr/samples/hello_world/
    ├── CMakeLists.txt   <- tells CMake "this is a Zephyr app" and lists the sources
    ├── prj.conf         <- Kconfig options: which kernel features and drivers to enable
    └── src/
@@ -46,9 +46,9 @@ Open each of the three files and read it. They are short:
 
 .. code-block:: bash
 
-   code zephyr/samples/hello_world/CMakeLists.txt
-   code zephyr/samples/hello_world/prj.conf
-   code zephyr/samples/hello_world/src/main.c
+   code zs-zephyr/samples/hello_world/CMakeLists.txt
+   code zs-zephyr/samples/hello_world/prj.conf
+   code zs-zephyr/samples/hello_world/src/main.c
 
 What to look for:
 
@@ -57,7 +57,7 @@ What to look for:
   ``src/main.c`` to the application.
 - ``prj.conf`` contains only a comment. That is fine: the board already ships
   sensible defaults, for example the serial console. They are in
-  ``zephyr/boards/nxp/frdm_mcxa156/frdm_mcxa156_defconfig``.
+  ``zs-zephyr/boards/nxp/frdm_mcxa156/frdm_mcxa156_defconfig``.
 - In ``src/main.c``, Zephyr calls ``main()`` after the kernel has booted.
   ``main()`` runs in a normal **thread**, the *main thread*. When ``main()``
   returns, only the main thread ends. The kernel keeps running.
@@ -84,7 +84,7 @@ In the terminal from `Before you start`_, run:
 
 .. code-block:: bash
 
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/hello_world
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/hello_world
 
 What the parts of this command mean:
 
@@ -95,7 +95,7 @@ What the parts of this command mean:
   supports hundreds of boards, and the same source code builds for all of
   them. To see the boards whose name contains ``mcx``, run
   ``west boards -n mcx``.
-- ``zephyr/samples/hello_world``: the application folder.
+- ``zs-zephyr/samples/hello_world``: the application folder.
 
 The build takes up to a minute. The result goes into the ``build`` folder of
 your work directory. The final program is ``build/zephyr/zephyr.elf`` (plus
@@ -165,7 +165,7 @@ Open the file:
 
 .. code-block:: bash
 
-   code zephyr/samples/hello_world/src/main.c
+   code zs-zephyr/samples/hello_world/src/main.c
 
 1. In ``main()``, find (**Ctrl+F**) the text ``Hello World!`` and change it to
    ``Hello Zephyr! Running on``. Change only the text between the quotes. The
@@ -245,13 +245,13 @@ Discussion
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/hello_world`` and get the original
+To undo all your changes in ``zs-zephyr/samples/hello_world`` and get the original
 files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
-   git -C zephyr checkout -- samples/hello_world
-   git -C zephyr clean -fd -- samples/hello_world
+   git -C zs-zephyr checkout -- samples/hello_world
+   git -C zs-zephyr clean -fd -- samples/hello_world
 
 The first command restores the files that came with Zephyr. The second
 one deletes the files that you **created** in that folder, for example an
@@ -260,7 +260,7 @@ overlay file.
 .. warning::
 
    These commands cannot be undone. All your changes in
-   ``zephyr/samples/hello_world`` are lost, and the files you created there are
+   ``zs-zephyr/samples/hello_world`` are lost, and the files you created there are
    deleted. If you want to keep your work, copy the folder somewhere else
    first.
 

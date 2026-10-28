@@ -14,16 +14,16 @@ interrupt instead of polling.
    :widths: 30 70
 
    * - Application folder
-     - ``zephyr/samples/workshop/button``
+     - ``zs-zephyr/samples/workshop/button``
 
    * - File you edit
-     - ``zephyr/samples/workshop/button/src/main.c``
+     - ``zs-zephyr/samples/workshop/button/src/main.c``
 
    * - Solution
-     - ``zephyr/samples/workshop/button/solution/src/main.c``
+     - ``zs-zephyr/samples/workshop/button/solution/src/main.c``
 
    * - Build command
-     - ``west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/button``
+     - ``west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/button``
 
    * - Flash command
      - ``west flash``
@@ -52,7 +52,7 @@ LEDs and buttons in Devicetree
 ------------------------------
 
 The board's hardware is described in its **Devicetree** file,
-``zephyr/boards/nxp/frdm_mcxa156/frdm_mcxa156.dts``. Open it and search
+``zs-zephyr/boards/nxp/frdm_mcxa156/frdm_mcxa156.dts``. Open it and search
 (**Ctrl+F**) for ``aliases {``. The aliases are standard names for board parts,
 so your code does not need to know pin numbers:
 
@@ -139,7 +139,7 @@ Open the starter file:
 
 .. code-block:: bash
 
-   code zephyr/samples/workshop/button/src/main.c
+   code zs-zephyr/samples/workshop/button/src/main.c
 
 It builds, but it only prints a message. It contains comments named
 ``Step 1`` to ``Step 6``. Each step below tells you where to add code,
@@ -228,7 +228,7 @@ Save (**Ctrl+S**), then:
 
 .. code-block:: bash
 
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/button
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/button
    west flash
 
 Each press of SW2 toggles the red LED, and the console prints:
@@ -240,12 +240,12 @@ Each press of SW2 toggles the red LED, and the console prints:
    Button pressed 2 times
 
 If it does not work, compare your file with the solution,
-``zephyr/samples/workshop/button/solution/src/main.c``. You can also build
+``zs-zephyr/samples/workshop/button/solution/src/main.c``. You can also build
 and flash the solution to see how it should behave:
 
 .. code-block:: bash
 
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/button/solution
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/button/solution
    west flash
 
 Then build your own version again with the build command from the table at
@@ -280,7 +280,7 @@ Rules of thumb for code in an ISR:
 
    .. code-block:: bash
 
-      code zephyr/samples/workshop/button/prj.conf
+      code zs-zephyr/samples/workshop/button/prj.conf
 
    Add this line at the end of the file and save:
 
@@ -342,13 +342,13 @@ Discussion
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/workshop/button`` and get the original
+To undo all your changes in ``zs-zephyr/samples/workshop/button`` and get the original
 files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
-   git -C zephyr checkout -- samples/workshop/button
-   git -C zephyr clean -fd -- samples/workshop/button
+   git -C zs-zephyr checkout -- samples/workshop/button
+   git -C zs-zephyr clean -fd -- samples/workshop/button
 
 The first command restores the files that came with Zephyr. The second
 one deletes the files that you **created** in that folder, for example an
@@ -357,7 +357,7 @@ overlay file.
 .. warning::
 
    These commands cannot be undone. All your changes in
-   ``zephyr/samples/workshop/button`` are lost, and the files you created there are
+   ``zs-zephyr/samples/workshop/button`` are lost, and the files you created there are
    deleted. If you want to keep your work, copy the folder somewhere else
    first.
 

@@ -15,13 +15,13 @@ color.
    :widths: 30 70
 
    * - Application folder
-     - ``zephyr/samples/basic/blinky``
+     - ``zs-zephyr/samples/basic/blinky``
 
    * - File you edit
-     - ``zephyr/samples/basic/blinky/src/main.c``
+     - ``zs-zephyr/samples/basic/blinky/src/main.c``
 
    * - Build command
-     - ``west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/basic/blinky``
+     - ``west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/basic/blinky``
 
    * - Flash command
      - ``west flash``
@@ -35,7 +35,7 @@ In the terminal from `Before you start`_, run:
 
 .. code-block:: bash
 
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/basic/blinky
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/basic/blinky
    west flash
 
 Keep the ``-p``: it cleans the ``build`` folder, which may still contain
@@ -53,7 +53,7 @@ Now open the source file. Keep it open while you read the next sections:
 
 .. code-block:: bash
 
-   code zephyr/samples/basic/blinky/src/main.c
+   code zs-zephyr/samples/basic/blinky/src/main.c
 
 .. admonition:: Zephyr |zephyr_version| reference
    :class: seealso
@@ -69,7 +69,7 @@ Devicetree file of the board:
 
 .. code-block:: bash
 
-   code zephyr/boards/nxp/frdm_mcxa156/frdm_mcxa156.dts
+   code zs-zephyr/boards/nxp/frdm_mcxa156/frdm_mcxa156.dts
 
 Search (**Ctrl+F**) for ``aliases {``. Inside this block you find:
 
@@ -163,7 +163,7 @@ configuration file of the application:
 
 .. code-block:: bash
 
-   code zephyr/samples/basic/blinky/prj.conf
+   code zs-zephyr/samples/basic/blinky/prj.conf
 
 It contains ``CONFIG_GPIO=y``. This enables the GPIO subsystem. On this board
 it happens to be enabled by default already, but it is good practice to write
@@ -179,12 +179,12 @@ in ``prj.conf`` what your application needs.
 Your tasks
 ----------
 
-All tasks edit ``zephyr/samples/basic/blinky/src/main.c``. Open it if it is not
+All tasks edit ``zs-zephyr/samples/basic/blinky/src/main.c``. Open it if it is not
 open yet:
 
 .. code-block:: bash
 
-   code zephyr/samples/basic/blinky/src/main.c
+   code zs-zephyr/samples/basic/blinky/src/main.c
 
 Do the tasks in order. After each task, save (**Ctrl+S**), then run:
 
@@ -252,7 +252,7 @@ application folder. Here you make ``led0`` point to the blue LED:
 
    .. code-block:: bash
 
-      code zephyr/samples/basic/blinky/boards/frdm_mcxa156.overlay
+      code zs-zephyr/samples/basic/blinky/boards/frdm_mcxa156.overlay
 
 2. Type this content and save:
 
@@ -269,7 +269,7 @@ application folder. Here you make ``led0`` point to the blue LED:
 
    .. code-block:: bash
 
-      west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/basic/blinky
+      west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/basic/blinky
       west flash
 
    The build output contains the line
@@ -277,7 +277,7 @@ application folder. Here you make ``led0`` point to the blue LED:
 
 4. The LED that was red is now **blue**. The C code still says ``led0``.
 
-5. Delete the file ``zephyr/samples/basic/blinky/boards/frdm_mcxa156.overlay``
+5. Delete the file ``zs-zephyr/samples/basic/blinky/boards/frdm_mcxa156.overlay``
    again and rebuild with ``-p``.
 
 **Compare the memory usage.** Look at the ``FLASH:`` and ``RAM:`` lines at the
@@ -302,13 +302,13 @@ Discussion
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/basic/blinky`` and get the original
+To undo all your changes in ``zs-zephyr/samples/basic/blinky`` and get the original
 files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
-   git -C zephyr checkout -- samples/basic/blinky
-   git -C zephyr clean -fd -- samples/basic/blinky
+   git -C zs-zephyr checkout -- samples/basic/blinky
+   git -C zs-zephyr clean -fd -- samples/basic/blinky
 
 The first command restores the files that came with Zephyr. The second
 one deletes the files that you **created** in that folder, for example an
@@ -317,7 +317,7 @@ overlay file.
 .. warning::
 
    These commands cannot be undone. All your changes in
-   ``zephyr/samples/basic/blinky`` are lost, and the files you created there are
+   ``zs-zephyr/samples/basic/blinky`` are lost, and the files you created there are
    deleted. If you want to keep your work, copy the folder somewhere else
    first.
 

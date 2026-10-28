@@ -30,16 +30,16 @@ management (state machines).
    :widths: 30 70
 
    * - Application folder
-     - ``zephyr/samples/workshop/reaction_game``
+     - ``zs-zephyr/samples/workshop/reaction_game``
 
    * - File you edit
-     - ``zephyr/samples/workshop/reaction_game/src/main.c``
+     - ``zs-zephyr/samples/workshop/reaction_game/src/main.c``
 
    * - Solution
-     - ``zephyr/samples/workshop/reaction_game/solution/src/main.c``
+     - ``zs-zephyr/samples/workshop/reaction_game/solution/src/main.c``
 
    * - Build command
-     - ``west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/reaction_game``
+     - ``west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/reaction_game``
 
    * - Flash command
      - ``west flash``
@@ -175,7 +175,7 @@ Open the starter file:
 
 .. code-block:: bash
 
-   code zephyr/samples/workshop/reaction_game/src/main.c
+   code zs-zephyr/samples/workshop/reaction_game/src/main.c
 
 Besides the code described in `What the starter already does`_, it contains
 comments named ``Step 1``, ``Step 2`` and ``Step 3 (bonus)``. Each step below
@@ -185,7 +185,7 @@ Build and flash after each step, to catch mistakes early:
 
 .. code-block:: bash
 
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/workshop/reaction_game
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/workshop/reaction_game
    west flash
 
 Until all steps are done, the build may print warnings such as
@@ -336,7 +336,7 @@ All of this goes into ``main()``.
 3. Save, build and flash. Play a few rounds.
 
 If you are stuck, the complete solution is in
-``zephyr/samples/workshop/reaction_game/solution/src/main.c``.
+``zs-zephyr/samples/workshop/reaction_game/solution/src/main.c``.
 
 .. note::
 
@@ -396,8 +396,8 @@ Ideas for extensions
   ``K_THREAD_DEFINE``, and add a second thread that blinks the green LED
   (alias ``led1``) once per second.
 - **Shell:** add ``CONFIG_SHELL=y`` to
-  ``zephyr/samples/workshop/reaction_game/prj.conf`` and add a ``game stats``
-  command. See ``zephyr/samples/subsys/shell/shell_module`` for an example.
+  ``zs-zephyr/samples/workshop/reaction_game/prj.conf`` and add a ``game stats``
+  command. See ``zs-zephyr/samples/subsys/shell/shell_module`` for an example.
 
 .. admonition:: Zephyr |zephyr_version| reference
    :class: seealso
@@ -418,13 +418,13 @@ Discussion
 Start over
 ----------
 
-To undo all your changes in ``zephyr/samples/workshop/reaction_game`` and get the original
+To undo all your changes in ``zs-zephyr/samples/workshop/reaction_game`` and get the original
 files back, run these two commands in your work directory:
 
 .. code-block:: bash
 
-   git -C zephyr checkout -- samples/workshop/reaction_game
-   git -C zephyr clean -fd -- samples/workshop/reaction_game
+   git -C zs-zephyr checkout -- samples/workshop/reaction_game
+   git -C zs-zephyr clean -fd -- samples/workshop/reaction_game
 
 The first command restores the files that came with Zephyr. The second
 one deletes the files that you **created** in that folder, for example an
@@ -433,7 +433,7 @@ overlay file.
 .. warning::
 
    These commands cannot be undone. All your changes in
-   ``zephyr/samples/workshop/reaction_game`` are lost, and the files you created there are
+   ``zs-zephyr/samples/workshop/reaction_game`` are lost, and the files you created there are
    deleted. If you want to keep your work, copy the folder somewhere else
    first.
 

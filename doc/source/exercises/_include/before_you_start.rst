@@ -44,10 +44,10 @@ environment.**
 
 Run **all** commands of this exercise in this terminal, without changing the
 directory. All file paths on this page are relative to this work directory.
-For example, ``zephyr/samples/hello_world/src/main.c`` means:
+For example, ``zs-zephyr/samples/hello_world/src/main.c`` means:
 
-- Linux: ``~/zephyr-workdir/zephyr/samples/hello_world/src/main.c``
-- Windows: ``~\Desktop\zephyr-workdir\zephyr\samples\hello_world\src\main.c``
+- Linux: ``~/zephyr-workdir/zs-zephyr/samples/hello_world/src/main.c``
+- Windows: ``~\Desktop\zephyr-workdir\zs-zephyr\samples\hello_world\src\main.c``
 
 To check that you are in the right directory, list the samples folder. You
 must see folders such as ``basic``, ``hello_world`` and ``workshop``:
@@ -58,13 +58,13 @@ must see folders such as ``basic``, ``hello_world`` and ``workshop``:
 
       .. code-block:: bash
 
-         ls zephyr/samples
+         ls zs-zephyr/samples
 
    .. group-tab:: Windows
 
       .. code-block:: powershell
 
-         dir zephyr\samples
+         dir zs-zephyr\samples
 
 **Step 3: open the serial console** in a second window and keep it open for
 the whole exercise. This is where the board prints its messages.
@@ -94,7 +94,7 @@ by the file path in the first terminal, for example:
 
 .. code-block:: bash
 
-   code zephyr/samples/hello_world/src/main.c
+   code zs-zephyr/samples/hello_world/src/main.c
 
 These VS Code shortcuts help you follow the instructions:
 
