@@ -4,7 +4,41 @@ Welcome to NXP's Zephyr workshop!
 About
 -----
 
-TODO
+This is a hands-on, beginner-friendly introduction to
+`Zephyr <https://www.zephyrproject.org/>`__, an open source, scalable
+real-time operating system (RTOS) for resource-constrained and embedded
+devices. You write, build and flash real code on an NXP **FRDM-MCXA156**
+development board, and you see the result on its LEDs, buttons and serial
+console.
+
+**Who is it for?**
+Developers who are new to Zephyr or to RTOS-based development. You do not
+need prior Zephyr experience. If you are rusty on C, the
+:doc:`C primer <exercises/c_primer>` covers what you need, and the
+:doc:`glossary <exercises/glossary>` explains the terminology.
+
+**What will you learn?**
+You go from "Hello World" to a small reaction-time game, one core concept per
+exercise:
+
+- the structure of a Zephyr application and the ``west`` build tool
+- controlling hardware with GPIO, described by Devicetree and configured with
+  Kconfig
+- reacting to events with interrupts and callbacks
+- running work concurrently with threads, priorities and message queues
+- combining timing, synchronization and a state machine in a complete
+  application
+
+**What do you need?**
+A PC running Linux or Windows, an FRDM-MCXA156 board and a USB-C cable. The
+:doc:`infrastructure guide <infrastructure/index>` walks you through the
+software setup. Complete the setup before the exercises start, so you can
+spend the workshop time on Zephyr itself.
+
+**How is it organized?**
+Each exercise builds on the previous one, but every page is self-contained.
+Exercises 3 to 5 come with a starter project and a working solution, so you
+can always catch up if you get stuck.
 
 Getting started
 ---------------
