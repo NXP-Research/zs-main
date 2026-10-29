@@ -8,7 +8,7 @@ manifest:
   projects:
     - name: zs-zephyr
       remote: nxp-zephyr-workshop
-      revision: dccb09599635bdff17633fa7e9dab014b91dce90
+      revision: c551e34b56cc3375c1503bf2143995d566bf4e8e
       import:
         name-allowlist:
           - hal_nxp
