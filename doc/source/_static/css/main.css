@@ -22,3 +22,16 @@
 .wy-side-nav-search a img.logo {
 	width: 175px;
 }
+
+/* "copy to clipboard" button of sphinx-copybutton: show it faintly all the
+ * time, so readers see that a code block can be copied, and fully when the
+ * mouse is over the block */
+button.copybtn {
+	opacity: 0.4;
+	transition: opacity 0.2s ease-in-out;
+}
+
+div.highlight:hover button.copybtn,
+button.copybtn:focus {
+	opacity: 1;
+}
