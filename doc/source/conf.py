@@ -13,7 +13,35 @@ author = 'NXP'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx_tabs.tabs", "sphinx.ext.extlinks"]
+extensions = [
+	"sphinx_tabs.tabs",
+	"sphinx.ext.extlinks",
+	"sphinx_copybutton",
+]
+
+# -- Options for sphinx-copybutton -------------------------------------------
+# https://sphinx-copybutton.readthedocs.io/
+#
+# Adds a "copy to clipboard" button to the top right corner of every code
+# block ('code-block', 'parsed-literal' and literal blocks). The code blocks
+# in this documentation contain no shell prompts, so the whole block is
+# copied as it is written.
+
+# strip a leading shell prompt if a block ever uses one: '$ ' (Linux),
+# '> ' or 'PS> ' (Windows PowerShell). This is a regular expression.
+copybutton_prompt_text = r"\$ |PS> |> "
+copybutton_prompt_is_regexp = True
+
+# copy the whole block, not only the lines that start with a prompt
+copybutton_only_copy_prompt_lines = False
+
+# a backslash at the end of a line continues a command, so copy such a
+# command as one line
+copybutton_line_continuation_character = "\\"
+
+# default selector of the extension, repeated here as documentation: a
+# single block can opt out of the button with ':class: no-copybutton'
+copybutton_selector = "div:not(.no-copybutton) > div.highlight > pre"
 
 # Zephyr version the workshop is based on. All links to the official Zephyr
 # documentation point to this version. Change it only here.
