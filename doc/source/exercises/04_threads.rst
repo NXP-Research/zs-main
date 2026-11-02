@@ -33,6 +33,10 @@ calls, ISR vs. thread context.
    * - Flash command
      - ``west flash``
 
+.. contents:: On this page
+   :local:
+   :depth: 2
+
 .. include:: _include/before_you_start.rst
 
 What the starter already does
