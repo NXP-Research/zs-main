@@ -28,6 +28,10 @@ interrupt instead of polling.
    * - Flash command
      - ``west flash``
 
+.. contents:: On this page
+   :local:
+   :depth: 2
+
 .. include:: _include/before_you_start.rst
 
 Polling vs. interrupts

@@ -26,6 +26,10 @@ build/flash process, the serial console.
    * - Flash command
      - ``west flash``
 
+.. contents:: On this page
+   :local:
+   :depth: 2
+
 .. include:: _include/before_you_start.rst
 
 Anatomy of a Zephyr application
