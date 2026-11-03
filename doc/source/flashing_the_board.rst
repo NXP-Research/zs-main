@@ -126,7 +126,7 @@ as an example, you can do so by running:
 .. code:: bash
 
    # make sure you're in zephyr-workdir before running this!
-   west build -p -b frdm_mcxa156/mcxa156 zephyr/samples/hello_world
+   west build -p -b frdm_mcxa156/mcxa156 zs-zephyr/samples/hello_world
 
 You can now flash the application by running:
 
